@@ -3,6 +3,7 @@
 import React from 'react';
 import Icon from '../ui/Icon';
 import { IconBtn } from '../ui/Buttons';
+import { useAuthStore } from '../../store/auth-store';
 import type { Route, PageProps } from '../../lib/types';
 
 const ROUTE_TITLES: Record<string, string> = {
@@ -26,6 +27,14 @@ interface TopBarProps {
 }
 
 export default function TopBar({ route, params, theme, onTheme, onToggleNav, onNav }: TopBarProps) {
+  const { clearAuth } = useAuthStore();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('de-email');
+    sessionStorage.removeItem('de-password');
+    clearAuth();
+  };
+
   return (
     <header style={{
       height: 56, flexShrink: 0,
@@ -37,7 +46,6 @@ export default function TopBar({ route, params, theme, onTheme, onToggleNav, onN
         <Icon name="collapse" />
       </IconBtn>
 
-      {/* Breadcrumbs */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, whiteSpace: 'nowrap', flexShrink: 0 }}>
         <span onClick={() => onNav('dashboard')} style={{ color: 'var(--muted)', cursor: 'pointer' }}>Hub</span>
         <Icon name="chevR" size={13} style={{ color: 'var(--faint)' }} />
@@ -54,35 +62,36 @@ export default function TopBar({ route, params, theme, onTheme, onToggleNav, onN
 
       <div style={{ flex: 1 }} />
 
-      {/* Search */}
       <div style={{
         display: 'flex', alignItems: 'center', gap: 8,
         background: 'var(--panel)', border: '1px solid var(--border)',
         padding: '6px 12px', flex: '0 1 320px', minWidth: 120, color: 'var(--muted)', cursor: 'text',
+        borderRadius: 8,
       }}>
         <Icon name="search" size={15} />
         <input
           placeholder="Search plants, NTN, events, reports…"
           style={{ border: 'none', background: 'transparent', color: 'var(--ink)', fontFamily: 'var(--font-sans)', fontSize: 13, width: '100%', outline: 'none' }}
         />
-        <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--faint)', border: '1px solid var(--border)', padding: '0 4px' }}>⌘K</span>
+        <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--faint)', border: '1px solid var(--border)', padding: '0 4px', borderRadius: 3 }}>⌘K</span>
       </div>
 
-      {/* Live pill */}
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0, fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', color: 'var(--muted)', padding: '4px 8px', border: '1px solid var(--border)' }}>
-        <span style={{ width: 6, height: 6, background: 'var(--sev-positive)' }} />
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0, fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', color: 'var(--muted)', padding: '4px 8px', border: '1px solid var(--border)', borderRadius: 8 }}>
+        <span style={{ width: 6, height: 6, background: 'var(--sev-positive)', borderRadius: '50%' }} />
         LIVE · synced 2m ago
       </span>
 
-      {/* Alerts */}
-      <button style={{ width: 32, height: 32, display: 'grid', placeItems: 'center', background: 'transparent', border: '1px solid transparent', color: 'var(--ink-2)', cursor: 'pointer', position: 'relative' }}>
+      <button style={{ width: 32, height: 32, display: 'grid', placeItems: 'center', background: 'transparent', border: '1px solid transparent', color: 'var(--ink-2)', cursor: 'pointer', position: 'relative', borderRadius: 8 }}>
         <Icon name="bell" />
-        <span style={{ position: 'absolute', top: 5, right: 5, width: 6, height: 6, background: 'var(--sev-critical)' }} />
+        <span style={{ position: 'absolute', top: 5, right: 5, width: 6, height: 6, background: 'var(--sev-critical)', borderRadius: '50%' }} />
       </button>
 
-      {/* Theme toggle */}
       <IconBtn onClick={onTheme} title="Toggle theme">
         <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
+      </IconBtn>
+
+      <IconBtn onClick={handleLogout} title="Sign out">
+        <Icon name="arrR" />
       </IconBtn>
     </header>
   );
