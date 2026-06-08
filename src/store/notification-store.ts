@@ -45,7 +45,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     try {
       const res = await getFactoryNotifications();
       const mapped: DigitalEyeEvent[] = [];
-      res.forEach((factory) => {
+      res.forEach((factory: any) => {
         const plant = PLANTS.find((p) => p.id === factory.industry_id) ?? {
           id: factory.industry_id, name: factory.industry_name,
           industry: 'cement', province: 'Pakistan', status: 'active',

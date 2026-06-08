@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import type { DEDevice } from '../lib/api/devices';
-import type { DECameraDetail } from '../lib/api/devices';
+import type { DEDevice } from '../api/devices';
+import type { DECameraDetail } from '../api/devices';
 
 interface DeviceState {
   devices:      DEDevice[];

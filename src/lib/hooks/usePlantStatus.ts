@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getFactoryOnlineStatus } from '../api/machineDetails';
-import type { DEFactoryOnlineStatus } from '../api/machineDetails';
-import { isConfigured } from '../api/client';
+import { getFactoryOnlineStatus } from '../../api/machineDetails';
+import type { DEFactoryOnlineStatus } from '../../api/machineDetails';
+import { isConfigured } from '../../api/client';
 
 export function usePlantStatus(industry_id?: string, pollMs = 30000) {
   const [online, setOnline]   = useState<boolean | null>(null);

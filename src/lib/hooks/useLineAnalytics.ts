@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getLineAnalytics } from '../api/products';
-import type { DELineAnalyticsItem } from '../api/products';
-import { isConfigured } from '../api/client';
+import { getLineAnalytics } from '../../api/products';
+import type { DELineAnalyticsItem } from '../../api/products';
+import { isConfigured } from '../../api/client';
 
 export function useLineAnalytics(camera_id?: string, target_date?: string) {
   const [data, setData]       = useState<DELineAnalyticsItem[]>([]);

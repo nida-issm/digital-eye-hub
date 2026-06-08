@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getCameraDetailsByIndustry } from '../api/devices';
-import type { DECameraDetail } from '../api/devices';
-import { isConfigured } from '../api/client';
+import { getCameraDetailsByIndustry } from '../../api/devices';
+import type { DECameraDetail } from '../../api/devices';
+import { isConfigured } from '../../api/client';
 
 export function useCameras(industry_id?: string) {
   const [cameras, setCameras] = useState<DECameraDetail[]>([]);

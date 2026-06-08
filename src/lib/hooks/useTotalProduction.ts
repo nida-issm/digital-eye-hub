@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getTotalAnalytics } from '../api/products';
-import type { DETotalAnalytics } from '../api/products';
-import { isConfigured } from '../api/client';
+import { getTotalAnalytics } from '../../api/products';
+import type { DETotalAnalytics } from '../../api/products';
+import { isConfigured } from '../../api/client';
 
 export function useTotalProduction(industry_id?: string) {
   const [data, setData]       = useState<DETotalAnalytics | null>(null);

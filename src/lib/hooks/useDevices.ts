@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getDevices } from '../api/devices';
-import type { DEDevice } from '../api/devices';
-import { isConfigured } from '../api/client';
+import { getDevices } from '../../api/devices';
+import type { DEDevice } from '../../api/devices';
+import { isConfigured } from '../../api/client';
 
 export function useDevices(industry_id?: string) {
   const [devices, setDevices] = useState<DEDevice[]>([]);

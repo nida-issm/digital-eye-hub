@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getGraphsAnalytics } from '../api/products';
-import type { DEGraphsAnalytics } from '../api/products';
-import { isConfigured } from '../api/client';
+import { getGraphsAnalytics } from '../../api/products';
+import type { DEGraphsAnalytics } from '../../api/products';
+import { isConfigured } from '../../api/client';
 
 export function useProduction(industry_id?: string) {
   const [data, setData]       = useState<number[]>([]);

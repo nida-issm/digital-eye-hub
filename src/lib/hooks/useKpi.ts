@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { hubGet, isHubConfigured } from '../api/hub';
-import { getCardAnalytics } from '../api/products';
-import { getIndustries } from '../api/industries';
-import { isConfigured } from '../api/client';
+import { hubGet, isHubConfigured } from '../../api/hub';
+import { getCardAnalytics } from '../../api/products';
+import { getIndustries } from '../../api/industries';
+import { isConfigured } from '../../api/client';
 import { KPI } from '../data';
 import type { KpiData } from '../types';
 

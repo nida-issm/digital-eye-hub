@@ -51,7 +51,7 @@ export const useIndustryStore = create<IndustryState>((set, get) => ({
       } else if (isConfigured) {
         const res = await getIndustries();
         set({
-          plants: res.map((d) => ({
+          plants: res.map((d: any) => ({
             id: d._id, name: d.industry_name, industry: 'cement' as Industry,
             province: 'Pakistan',
             status: d.industry_status === 'active' ? 'active' : 'alert',
