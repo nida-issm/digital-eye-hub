@@ -5,3 +5,4 @@ export * from './industries';
 export * from './devices';
 export * from './products';
 export * from './machineDetails';
+export * from './hub';
