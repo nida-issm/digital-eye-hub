@@ -3,17 +3,15 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import TopBar  from './TopBar';
-import { LoginPage }                    from '../pages/LoginPage';
-import DashboardPage                    from '../pages/DashboardPage';
-import { MapPage }                      from '../pages/MapPage';
-import { EventsPage }                   from '../pages/EventsPage';
-import { AnomaliesPage }                from '../pages/AnomaliesPage';
-import { PatternsPage }                 from '../pages/PatternsPage';
-import { PolicyPage }                   from '../pages/PolicyPage';
-import { ReportsPage }                  from '../pages/ReportsPage';
-import { PlantPage }                    from '../pages/PlantPage';
-import { useAuthStore }                 from '../../store/auth-store';
-import type { Route, PageProps }        from '../../lib/types';
+import DashboardPage            from '../pages/DashboardPage';
+import { MapPage }              from '../pages/MapPage';
+import { EventsPage }           from '../pages/EventsPage';
+import { AnomaliesPage }        from '../pages/AnomaliesPage';
+import { PatternsPage }         from '../pages/PatternsPage';
+import { PolicyPage }           from '../pages/PolicyPage';
+import { ReportsPage }          from '../pages/ReportsPage';
+import { PlantPage }            from '../pages/PlantPage';
+import type { Route, PageProps } from '../../lib/types';
 
 const PAGES: Record<Route, React.ComponentType<PageProps>> = {
   dashboard: DashboardPage,
@@ -32,27 +30,16 @@ export default function AppShell() {
   const [collapsed, setCollapsed] = useState(false);
   const [theme,     setTheme]     = useState<string>('dark');
   const pageRef = useRef<HTMLDivElement>(null);
-  const { isAuthed, setCredentials } = useAuthStore();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
-
-  // Check sessionStorage for existing credentials on mount
-  useEffect(() => {
-    const email = sessionStorage.getItem('de-email');
-    if (email && !isAuthed) setCredentials(email);
-  }, []);
 
   const navigate = useCallback((r: Route, p: PageProps['params'] = {}) => {
     setRoute(r);
     setParams(p);
     if (pageRef.current) pageRef.current.scrollTop = 0;
   }, []);
-
-  if (!isAuthed) {
-    return <LoginPage onLogin={() => {}} />;
-  }
 
   const View = PAGES[route] ?? DashboardPage;
 
