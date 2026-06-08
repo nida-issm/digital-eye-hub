@@ -7,8 +7,8 @@ interface FetchOptions {
 function getCredentials() {
   if (typeof window === 'undefined') return { email: '', password: '' };
   return {
-    email:    sessionStorage.getItem('de-email')    ?? '',
-    password: sessionStorage.getItem('de-password') ?? '',
+    email:    localStorage.getItem('de-email')    ?? '',
+    password: localStorage.getItem('de-password') ?? '',
   };
 }
 

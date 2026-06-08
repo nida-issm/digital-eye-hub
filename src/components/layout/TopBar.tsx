@@ -30,8 +30,8 @@ export default function TopBar({ route, params, theme, onTheme, onToggleNav, onN
   const { clearAuth } = useAuthStore();
 
   const handleLogout = () => {
-    sessionStorage.removeItem('de-email');
-    sessionStorage.removeItem('de-password');
+    localStorage.removeItem('de-email');
+    localStorage.removeItem('de-password');
     clearAuth();
   };
 

@@ -24,8 +24,8 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
       if (!res.ok) throw new Error('Invalid credentials');
       setCredentials(email);
       // Store credentials in sessionStorage for proxy use
-      sessionStorage.setItem('de-email', email);
-      sessionStorage.setItem('de-password', password);
+      localStorage.setItem('de-email', email);
+      localStorage.setItem('de-password', password);
       onLogin();
     } catch (e) {
       setError('Invalid email or password.');

@@ -3,14 +3,16 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import TopBar  from './TopBar';
-import DashboardPage            from '../pages/DashboardPage';
-import { MapPage }              from '../pages/MapPage';
-import { EventsPage }           from '../pages/EventsPage';
-import { AnomaliesPage }        from '../pages/AnomaliesPage';
-import { PatternsPage }         from '../pages/PatternsPage';
-import { PolicyPage }           from '../pages/PolicyPage';
-import { ReportsPage }          from '../pages/ReportsPage';
-import { PlantPage }            from '../pages/PlantPage';
+import { LoginPage }             from '../pages/LoginPage';
+import DashboardPage             from '../pages/DashboardPage';
+import { MapPage }               from '../pages/MapPage';
+import { EventsPage }            from '../pages/EventsPage';
+import { AnomaliesPage }         from '../pages/AnomaliesPage';
+import { PatternsPage }          from '../pages/PatternsPage';
+import { PolicyPage }            from '../pages/PolicyPage';
+import { ReportsPage }           from '../pages/ReportsPage';
+import { PlantPage }             from '../pages/PlantPage';
+import { useAuthStore }          from '../../store/auth-store';
 import type { Route, PageProps } from '../../lib/types';
 
 const PAGES: Record<Route, React.ComponentType<PageProps>> = {
@@ -29,17 +31,46 @@ export default function AppShell() {
   const [params,    setParams]    = useState<PageProps['params']>({});
   const [collapsed, setCollapsed] = useState(false);
   const [theme,     setTheme]     = useState<string>('dark');
+  const [ready,     setReady]     = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
+  const { setCredentials, clearAuth } = useAuthStore();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    // Always validate credentials from localStorage on mount
+    const email    = localStorage.getItem('de-email');
+    const password = localStorage.getItem('de-password');
+    if (email && password) {
+      setCredentials(email);
+    } else {
+      // No credentials — force logout
+      clearAuth();
+    }
+    setReady(true);
+  }, []);
+
+  const { isAuthed } = useAuthStore();
 
   const navigate = useCallback((r: Route, p: PageProps['params'] = {}) => {
     setRoute(r);
     setParams(p);
     if (pageRef.current) pageRef.current.scrollTop = 0;
   }, []);
+
+  const handleLogin = useCallback(() => {
+    const email = localStorage.getItem('de-email');
+    if (email) setCredentials(email);
+  }, []);
+
+  // Don't render until we've checked localStorage
+  if (!ready) return null;
+
+  if (!isAuthed) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
 
   const View = PAGES[route] ?? DashboardPage;
 
